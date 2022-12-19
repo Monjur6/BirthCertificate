@@ -29,6 +29,7 @@ namespace DAL.EF
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Hosital_information> Hosital_information { get; set; }
         public DbSet<HospitalEmployee> HospitalEmployees { get; set; }
+        public DbSet<Token> Tokens { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<VolInfo> VolInfoes { get; set; }
     }

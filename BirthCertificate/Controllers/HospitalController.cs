@@ -11,80 +11,85 @@ namespace BirthCertificate.Controllers
 {
     public class HospitalController : ApiController
     {
-        [Route("api/Hospital/home")]
+        [Route("api/hospital")]
         [HttpGet]
         public HttpResponseMessage Get()
         {
-            var d = HospitalService.Get();
-            return Request.CreateResponse(HttpStatusCode.OK, d);
+            var data = HospitalService.Get();
+            return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
-        [Route("api/Hospital/home/{id}")]
+        [Route("api/hospital/{id}")]
         [HttpGet]
         public HttpResponseMessage Get(int id)
         {
-            var d = HospitalService.Get(id);
-            ////if (d != null)
-            return Request.CreateResponse(HttpStatusCode.OK, d);
-            // else
-            // return Request.CreateResponse(HttpStatusCode.NotFound, "Empty");
+            var data = HospitalService.Get(id);
+            return Request.CreateResponse(HttpStatusCode.OK, data);
         }
-        //[Route("api/client/update")]
-        //[HttpGet]
-        //public HttpResponseMessage Update(HospitalDTO Hospital)
-        //{
-        //    if (HospitalService.e
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.OK, "Profile Edited Successfully");
-        //    }
-        //    return Request.CreateResponse(HttpStatusCode.NotFound, "Profile Edit Failed");
-        //}
 
-
-        [Route("api/Hospitals/add")]
+        [Route("api/hospital/add")]
         [HttpPost]
-        public HttpResponseMessage Add(HospitalDTO hospital)
+        public HttpResponseMessage Post(HospitalDTO   hospitaL)
         {
-            var data = HospitalService.Add(hospital);
-            if (data != null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, data);
+                var data = HospitalService.Add(hospitaL);
+                if (data)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new
+                    {
+                        Message = "Successfully created"
+                    });
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotAcceptable, new
+                    {
+                        Message = "Unsuccessfully created"
+                    });
+                }
             }
-            return Request.CreateResponse(HttpStatusCode.InternalServerError);
 
         }
-
-
-        [Route("Hospitalserviecs/create")]
-
+        [Route("api/hospital/update")]
         [HttpPost]
-        public HttpResponseMessage Create(HospitalDTO hospital)
+        public HttpResponseMessage Update(HospitalDTO dto)
         {
-            var isCreated = HospitalService.Add(hospital);
-
-            return Request.CreateResponse(HttpStatusCode.OK, hospital);
+            var data = HospitalService.Update(dto);
+            if (data)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new
+                {
+                    Message = "Successfully updated"
+                });
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotAcceptable, new
+                {
+                    Message = "Unsuccessfully updated"
+                });
+            }
         }
 
-        [Route("categoryinvoices/delete/{id}")]
+        [Route("api/hospital/delete/{id}")]
         [HttpPost]
-        public HttpResponseMessage Delete(int hospital)
+        public HttpResponseMessage Delete(int id)
         {
-            var isDeleted = HospitalService.Delete(hospital);
-
-            return Request.CreateResponse(HttpStatusCode.OK, hospital);
-
-
-        }
-        [Route("categoryinvoices/update")]
-
-        [HttpPost]
-        public HttpResponseMessage Update(HospitalDTO hospital)
-        {
-            var isUpdated = HospitalService.Update(hospital);
-
-            return Request.CreateResponse(HttpStatusCode.OK, hospital);
-
-
+            var data = HospitalService.Delete(id);
+            if (data)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new
+                {
+                    Message = "Successfully deleted"
+                });
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotAcceptable, new
+                {
+                    Message = "Unsuccessfully deleted"
+                });
+            }
         }
 
     }

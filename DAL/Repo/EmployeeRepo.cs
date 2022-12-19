@@ -10,9 +10,16 @@ namespace DAL.Repo
 {
     class EmployeeRepo : IRepo<Employee, string, Employee>, EAuth
     {
+        BIRTHEntities db;
+        internal EmployeeRepo()
+        {
+            db = new BIRTHEntities();
+        }
         public Employee Add(Employee obj)
         {
-            throw new NotImplementedException();
+            db.Employees.Add(obj);
+            db.SaveChanges();
+            return obj;
         }
 
         public Employee Authenticate(string uname, string password)
@@ -22,22 +29,25 @@ namespace DAL.Repo
 
         public bool Delete(string id)
         {
-            throw new NotImplementedException();
+            db.Employees.Remove(db.Employees.Find(id));
+            return db.SaveChanges() > 0;
         }
 
         public List<Employee> Get()
         {
-            throw new NotImplementedException();
+            return db.Employees.ToList();
         }
 
         public Employee Get(string id)
         {
-            throw new NotImplementedException();
+            return db.Employees.Find(id);
         }
 
         public bool Update(Employee obj)
         {
-            throw new NotImplementedException();
+            var ext = db.Employees.Find(obj.Name);
+            db.Entry(ext).CurrentValues.SetValues(obj);
+            return db.SaveChanges() > 0;
         }
     }
 }

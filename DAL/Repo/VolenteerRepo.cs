@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repo
 {
-    class VolenteerRepo : IRepo<VolInfo, int, bool>
+    public class VolenteerRepo : IRepo<VolInfo, int, bool>
     {
         BIRTHEntities db;
         internal VolenteerRepo()

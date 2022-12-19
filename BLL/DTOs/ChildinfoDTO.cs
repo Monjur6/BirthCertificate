@@ -18,8 +18,7 @@ namespace BLL.DTOs
         public string parmanentAddress { get; set; }
         public string FatherNationality { get; set; }
         public string MotherNationality { get; set; }
-
-        public virtual Hosital_information Hosital_information { get; set; }
+        public int CHILDID { get; set; }
     }
 }
 

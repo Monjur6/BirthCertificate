@@ -50,21 +50,25 @@ namespace BLL.Services
 
         }
 
+        public static bool Delete(int id)
+        {
 
+            var result = DataAccessFactory.HospitalEmployeeDataAccess().Delete(id);
+            return result;
+        }
 
-        //public static HospitalEmployeeDTO Delete(HospitalEmployeeDTO dto)
-        //{
-        //    var config = new MapperConfiguration(cfg =>
-        //    {
-        //        cfg.CreateMap<HospitalEmployee, HospitalEmployeeDTO>();
-        //        cfg.CreateMap<HospitalEmployeeDTO, HospitalEmployee>();
-        //    });
+        public static bool Update(HospitalEmployeeDTO dto)
+        {
 
-        //    var mapper = new Mapper(config);
-        //    var group = mapper.Map<HospitalEmployeeDTO>(dto);
-        //    var result = DataAccessFactory.GroupDataAccess().Delete(default);
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<HospitalEmployeeDTO, HospitalEmployee>();
+                cfg.CreateMap<HospitalEmployee, HospitalEmployeeDTO>();
+            });
+            var mapper = new Mapper(config);
+            var data = mapper.Map<HospitalEmployee>(dto);
+            var result = DataAccessFactory.HospitalEmployeeDataAccess().Update(data);
+            return result;
 
-        //    return mapper.Map<HospitalEmployeeDTO>(result);
-        //}
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace BLL.Services
     {
         public static List<HospitalDTO> Get()
         {
-            var dbdata = DataAccessFactory.UserDataAccess().Get();
+            var dbdata = DataAccessFactory.HospitalDataAccess().Get();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Hosital_information, HospitalDTO>());
             var mapper = new Mapper(config);
             var groups = mapper.Map<List<HospitalDTO>>(dbdata);
@@ -25,51 +25,50 @@ namespace BLL.Services
         }
         public static HospitalDTO Get(int id)
         {
-            var dbdata = DataAccessFactory.GroupDataAccess().Get(id);
+            var dbdata = DataAccessFactory.HospitalDataAccess().Get(id);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Hosital_information, HospitalDTO>());
             var mapper = new Mapper(config);
             var data = mapper.Map<HospitalDTO>(dbdata);
             return data;
 
         }
-        public static HospitalDTO Add(HospitalDTO dto)
+        public static bool Add(HospitalDTO dto)
         {
             var config = new MapperConfiguration(cfg =>
             {
+                cfg.CreateMap<HospitalDTO, Hosital_information>();
                 cfg.CreateMap<Hosital_information, HospitalDTO>();
-                cfg.CreateMap< HospitalDTO, Hosital_information>();
             });
             var mapper = new Mapper(config);
-            var data = mapper.Map<HospitalDTO>(dto);
-            var result = DataAccessFactory.GroupDataAccess().Add(default);
-            var rdata = mapper.Map<HospitalDTO>(result);
-            return rdata;
+            var data = mapper.Map<Hosital_information>(dto);
+            var result = DataAccessFactory.HospitalDataAccess().Add(data);
+            return result;
         }
+
 
 
         public static bool Delete(int id)
         {
-            return DataAccessFactory.GroupDataAccess().Delete(id);
+
+            var result = DataAccessFactory.HospitalDataAccess().Delete(id);
+            return result;
         }
 
 
-        public static HospitalDTO Update(HospitalDTO dto)
+        public static bool Update(HospitalDTO dto)
         {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Hosital_information, HospitalDTO>();
+            var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<HospitalDTO, Hosital_information>();
+                cfg.CreateMap<Hosital_information, HospitalDTO>();
             });
             var mapper = new Mapper(config);
-            var data = mapper.Map<HospitalDTO>(dto);
-            var result = DataAccessFactory.GroupDataAccess().Add(default);
-            var rdata = mapper.Map<HospitalDTO>(result);
-            return rdata;
-        }
+            var data = mapper.Map<Hosital_information>(dto);
+            var result = DataAccessFactory.HospitalDataAccess().Update(data);
+            return result;
 
-        public static object Delete(HospitalDTO hospital)
-        {
-            throw new NotImplementedException();
+
+
+
         }
     }
 }

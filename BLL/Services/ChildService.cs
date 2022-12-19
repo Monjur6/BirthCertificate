@@ -7,14 +7,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace BLL.Services
 {
     public class ChildService
     {
-        public static List<ChildinfoDTO> GetGroups()
+        public static List<ChildinfoDTO> Get()
         {
-            var data = DataAccessFactory.GroupDataAccess().Get();
+            var data = DataAccessFactory.ChildDataAccess().Get();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Children_information, ChildinfoDTO>());
             var mapper = new Mapper(config);
             var groups = mapper.Map<List<ChildinfoDTO>>(data);
@@ -24,7 +25,7 @@ namespace BLL.Services
 
         public static ChildinfoDTO Get(int id)
         {
-            var data = DataAccessFactory.GroupDataAccess().Get(id);
+            var data = DataAccessFactory.ChildDataAccess().Get(id);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Children_information, ChildinfoDTO>());
             var mapper = new Mapper(config);
             var group = mapper.Map<ChildinfoDTO>(data);
@@ -32,27 +33,9 @@ namespace BLL.Services
 
         }
 
-        public static bool Add(ChildinfoDTO dto)
+        public static ChildinfoDTO Add(ChildinfoDTO dto)
         {
 
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Children_information, ChildinfoDTO>();
-                cfg.CreateMap< ChildinfoDTO, Children_information>();
-            });
-
-            var mapper = new Mapper(config);
-            var group = mapper.Map<ChildinfoDTO>(dto);
-            var result = DataAccessFactory.GroupDataAccess().Add(default);
-            return result;
-
-
-        }
-
-
-
-        public ChildinfoDTO Delete(ChildinfoDTO dto)
-        {
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Children_information, ChildinfoDTO>();
@@ -61,10 +44,38 @@ namespace BLL.Services
 
             var mapper = new Mapper(config);
             var data = mapper.Map<Children_information>(dto);
-            var result = DataAccessFactory.GroupDataAccess().Add(data);
+            var result = DataAccessFactory.ChildDataAccess().Add(data);
             var redata = mapper.Map<ChildinfoDTO>(result);
             return redata;
+
         }
+
+
+
+        public static bool Delete(int id)
+        {
+            var result = DataAccessFactory.ChildDataAccess().Delete(id);
+            return result;
+        }
+
+
+
+        public static bool Update(ChildinfoDTO dto)
+        {
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<ChildinfoDTO, Children_information>();
+                cfg.CreateMap<Children_information, ChildinfoDTO>();
+            });
+            var mapper = new Mapper(config);
+            var data = mapper.Map<Children_information>(dto);
+            var result = DataAccessFactory.ChildDataAccess().Update(data);
+            return result;
+        }
+
     }
-}
+
+
+     
+    }
+
 

@@ -20,6 +20,6 @@ namespace BLL.DTOs
         [Required]
         public int Vinfo { get; set; }
 
-        public virtual VolInfo VolInfo { get; set; }
+        //public virtual VolInfo VolInfo { get; set; }
     }
 }

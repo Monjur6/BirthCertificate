@@ -11,23 +11,22 @@ namespace DAL
 {
     public class DataAccessFactory
     {
-        public static IRepo<Children_information, int, bool> GroupDataAccess()
+        static BIRTHEntities db = new BIRTHEntities();
+        public static IAuth AuthDataAccess()
+        {
+            return new AuthRepo(db);
+        }
+        public static IRepo<Children_information, int, Children_information> ChildDataAccess()
         {
             return new BIRTHREGISTER();
         }
-        public static IRepo<Hosital_information, int, Hosital_information> Children_informationDataAccess()
+        public static IRepo<Hosital_information, int, bool> HospitalDataAccess()
         {
             return new HospitalRepo();
         }
-        public static IRepo<User, string, User> UserDataAccess()
-        {
-            return new UserRepo();
+      
 
-        }
-        public static IAuth AuthDataAccess()
-        {
-            return new UserRepo();
-        }
+     
 
 
         public static IRepo<VolInfo, int, bool> VolenteerDataAccess()

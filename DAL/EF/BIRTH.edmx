@@ -47,12 +47,22 @@
           <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Vinfo" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BirthRegistrationNumber" Type="int" Nullable="false" />
+          <Property Name="Createdat" Type="datetime" Nullable="false" />
+          <Property Name="Expireat" Type="datetime" Nullable="false" />
+          <Property Name="tokenaccess" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Username" />
           </Key>
           <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="VolInfo">
           <Key>
@@ -87,11 +97,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Token_Children_information">
+          <End Role="Children_information" Type="Self.Children_information" Multiplicity="1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Children_information">
+              <PropertyRef Name="BirthRegistrationNumber" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="BirthRegistrationNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="BIRTHModelStoreContainer">
           <EntitySet Name="Children_information" EntityType="Self.Children_information" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Hosital_information" EntityType="Self.Hosital_information" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HospitalEmployee" EntityType="Self.HospitalEmployee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VolInfo" EntityType="Self.VolInfo" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Children_information_Hosital_information" Association="Self.FK_Children_information_Hosital_information">
@@ -101,6 +124,10 @@
           <AssociationSet Name="FK_HospitalEmployee_VolInfo" Association="Self.FK_HospitalEmployee_VolInfo">
             <End Role="VolInfo" EntitySet="VolInfo" />
             <End Role="HospitalEmployee" EntitySet="HospitalEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Token_Children_information" Association="Self.FK_Token_Children_information">
+            <End Role="Children_information" EntitySet="Children_information" />
+            <End Role="Token" EntitySet="Token" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -123,6 +150,7 @@
           <Property Name="MotherNationality" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CHILDID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Hosital_information" Relationship="Self.FK_Children_information_Hosital_information" FromRole="Children_information" ToRole="Hosital_information" />
+          <NavigationProperty Name="Tokens" Relationship="Self.FK_Token_Children_information" FromRole="Children_information" ToRole="Token" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -153,12 +181,23 @@
           <Property Name="Vinfo" Type="Int32" Nullable="false" />
           <NavigationProperty Name="VolInfo" Relationship="Self.FK_HospitalEmployee_VolInfo" FromRole="HospitalEmployee" ToRole="VolInfo" />
         </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BirthRegistrationNumber" Type="Int32" Nullable="false" />
+          <Property Name="Createdat" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Expireat" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="tokenaccess" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Children_information" Relationship="Self.FK_Token_Children_information" FromRole="Token" ToRole="Children_information" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Username" />
           </Key>
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="VolInfo">
           <Key>
@@ -182,6 +221,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Token_Children_information">
+          <End Role="Children_information" Type="Self.Children_information" Multiplicity="1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Children_information">
+              <PropertyRef Name="BirthRegistrationNumber" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="BirthRegistrationNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_HospitalEmployee_VolInfo">
           <End Role="VolInfo" Type="Self.VolInfo" Multiplicity="1" />
           <End Role="HospitalEmployee" Type="Self.HospitalEmployee" Multiplicity="*" />
@@ -199,11 +250,16 @@
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Hosital_information" EntityType="Self.Hosital_information" />
           <EntitySet Name="HospitalEmployees" EntityType="Self.HospitalEmployee" />
+          <EntitySet Name="Tokens" EntityType="Self.Token" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="VolInfoes" EntityType="Self.VolInfo" />
           <AssociationSet Name="FK_Children_information_Hosital_information" Association="Self.FK_Children_information_Hosital_information">
             <End Role="Hosital_information" EntitySet="Hosital_information" />
             <End Role="Children_information" EntitySet="Children_information" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Token_Children_information" Association="Self.FK_Token_Children_information">
+            <End Role="Children_information" EntitySet="Children_information" />
+            <End Role="Token" EntitySet="Tokens" />
           </AssociationSet>
           <AssociationSet Name="FK_HospitalEmployee_VolInfo" Association="Self.FK_HospitalEmployee_VolInfo">
             <End Role="VolInfo" EntitySet="VolInfoes" />
@@ -259,6 +315,17 @@
                 <ScalarProperty Name="Dob" ColumnName="Dob" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Vinfo" ColumnName="Vinfo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tokens">
+            <EntityTypeMapping TypeName="BIRTHModel.Token">
+              <MappingFragment StoreEntitySet="Token">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="BirthRegistrationNumber" ColumnName="BirthRegistrationNumber" />
+                <ScalarProperty Name="Createdat" ColumnName="Createdat" />
+                <ScalarProperty Name="Expireat" ColumnName="Expireat" />
+                <ScalarProperty Name="tokenaccess" ColumnName="tokenaccess" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -42,12 +42,22 @@
     <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="Vinfo" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Token">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BirthRegistrationNumber" Type="int" Nullable="false" />
+    <Property Name="Createdat" Type="datetime" Nullable="false" />
+    <Property Name="Expireat" Type="datetime" Nullable="false" />
+    <Property Name="tokenaccess" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="Users">
     <Key>
       <PropertyRef Name="Username" />
     </Key>
     <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Password" Type="varchar" MaxLength="50" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="VolInfo">
     <Key>
@@ -82,11 +92,24 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Token_Children_information">
+    <End Role="Children_information" Type="Self.Children_information" Multiplicity="1" />
+    <End Role="Token" Type="Self.Token" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Children_information">
+        <PropertyRef Name="BirthRegistrationNumber" />
+      </Principal>
+      <Dependent Role="Token">
+        <PropertyRef Name="BirthRegistrationNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="BIRTHModelStoreContainer">
     <EntitySet Name="Children_information" EntityType="Self.Children_information" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Hosital_information" EntityType="Self.Hosital_information" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="HospitalEmployee" EntityType="Self.HospitalEmployee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="VolInfo" EntityType="Self.VolInfo" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Children_information_Hosital_information" Association="Self.FK_Children_information_Hosital_information">
@@ -96,6 +119,10 @@
     <AssociationSet Name="FK_HospitalEmployee_VolInfo" Association="Self.FK_HospitalEmployee_VolInfo">
       <End Role="VolInfo" EntitySet="VolInfo" />
       <End Role="HospitalEmployee" EntitySet="HospitalEmployee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Token_Children_information" Association="Self.FK_Token_Children_information">
+      <End Role="Children_information" EntitySet="Children_information" />
+      <End Role="Token" EntitySet="Token" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

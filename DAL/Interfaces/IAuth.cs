@@ -9,6 +9,8 @@ namespace DAL.Interfaces
 {
     public interface IAuth
     {
-        User Authenticate(string username, string password);
+        Token Authenticate(string ChildrenName, string Dateofbirrh);
+        bool IsAuthenticated(string token);
+        bool Logout(int id);
     }
 }

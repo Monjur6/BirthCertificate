@@ -8,18 +8,19 @@ using System.Threading.Tasks;
 
 namespace DAL.Repo
 {
-    public class HospitalRepo : IRepo<Hosital_information, int, Hosital_information>
+    public class HospitalRepo : IRepo<Hosital_information, int, bool>
     {
+      
         BIRTHEntities db;
         internal HospitalRepo()
         {
             db = new BIRTHEntities();
         }
-        public Hosital_information Add(Hosital_information obj)
+
+        public bool Add(Hosital_information obj)
         {
             db.Hosital_information.Add(obj);
-            db.SaveChanges();
-            return obj;
+            return db.SaveChanges() > 0;
         }
 
         public Hosital_information Authenticate(string uname, string password)
@@ -29,8 +30,8 @@ namespace DAL.Repo
 
         public bool Delete(int id)
         {
-            db.Hosital_information.Remove(db.Hosital_information.Find(id));
-            db.SaveChanges();
+            var ext = db.Hosital_information.Find(id);
+            db.Hosital_information.Remove(ext);
             return db.SaveChanges() > 0;
         }
 
@@ -43,6 +44,7 @@ namespace DAL.Repo
         {
             return db.Hosital_information.Find(id);
         }
+
         public bool Update(Hosital_information obj)
         {
             var ext = Get(obj.HospitalID);
@@ -51,4 +53,6 @@ namespace DAL.Repo
         }
     }
 }
+
+
 

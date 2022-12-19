@@ -35,28 +35,32 @@ namespace BLL.Services
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<VolInfo, VolenteerDTO>();
                 cfg.CreateMap<VolenteerDTO, VolInfo>();
+                cfg.CreateMap<VolInfo, VolenteerDTO>();
             });
             var mapper = new Mapper(config);
             var data = mapper.Map<VolInfo>(dto);
             var result = DataAccessFactory.VolenteerDataAccess().Add(data);
             return result;
         }
+        public static bool Delete(int id)
+        {
 
+            var result = DataAccessFactory.VolenteerDataAccess().Delete(id);
+            return result;
+        }
+        public static bool Update(VolenteerDTO dto)
+        {
 
-        //public static VolenteerDTO Delete(VolenteerDTO dto)
-        //{
-        //    var config = new MapperConfiguration(cfg =>
-        //    {
-        //        cfg.CreateMap<VolInfo, VolenteerDTO>();
-        //        cfg.CreateMap<VolenteerDTO, VolInfo>();
-        //    });
-        //    var mapper = new Mapper(config);
-        //    var data = mapper.Map<VolenteerDTO>(dto);
-        //    var result = DataAccessFactory.GroupDataAccess().Delete(default);
-        //    var rdata = mapper.Map<VolenteerDTO>(result);
-        //    return rdata;
-        //}
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<VolenteerDTO, VolInfo>();
+                cfg.CreateMap<VolInfo, VolenteerDTO>();
+            });
+            var mapper = new Mapper(config);
+            var data = mapper.Map<VolInfo>(dto);
+            var result = DataAccessFactory.VolenteerDataAccess().Update(data);
+            return result;
+
+        }
     }
 }

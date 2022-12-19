@@ -14,6 +14,11 @@ namespace DAL.EF
     
     public partial class Children_information
     {
+        public Children_information()
+        {
+            this.Tokens = new HashSet<Token>();
+        }
+    
         public string ChildrenName { get; set; }
         public string Dateofbirth { get; set; }
         public int BirthRegistrationNumber { get; set; }
@@ -26,5 +31,6 @@ namespace DAL.EF
         public int CHILDID { get; set; }
     
         public virtual Hosital_information Hosital_information { get; set; }
+        public virtual ICollection<Token> Tokens { get; set; }
     }
 }

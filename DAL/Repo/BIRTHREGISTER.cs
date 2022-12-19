@@ -8,21 +8,18 @@ using System.Threading.Tasks;
 
 namespace DAL.Repo
 {
-    public class BIRTHREGISTER : IRepo<Children_information, int, bool>
+    public class BIRTHREGISTER : IRepo<Children_information, int, Children_information>
     {
-
         BIRTHEntities db;
-
-
         internal BIRTHREGISTER()
         {
             db = new BIRTHEntities();
         }
-
-        public bool Add(Children_information obj)
+        public Children_information Add(Children_information obj)
         {
-            db.Children_information.Add(obj); ;
-            return db.SaveChanges() > 0;
+            db.Children_information.Add(obj);
+            db.SaveChanges();
+            return obj;
         }
 
         public Children_information Authenticate(string uname, string password)
@@ -32,8 +29,7 @@ namespace DAL.Repo
 
         public bool Delete(int id)
         {
-            var ext = db.Children_information.Find(id);
-            db.Children_information.Remove(ext);
+            db.Children_information.Remove(db.Children_information.Find(id));
             return db.SaveChanges() > 0;
         }
 
@@ -49,11 +45,10 @@ namespace DAL.Repo
 
         public bool Update(Children_information obj)
         {
-            var ext = Get(obj.BirthRegistrationNumber);
+            var ext = db.Children_information.Find(obj.BirthRegistrationNumber);
             db.Entry(ext).CurrentValues.SetValues(obj);
             return db.SaveChanges() > 0;
-
-
         }
     }
 }
+

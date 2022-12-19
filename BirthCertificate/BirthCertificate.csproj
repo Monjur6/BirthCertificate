@@ -85,10 +85,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="AUTH\ChildAuth.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\ChildController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HospitalController.cs" />
     <Compile Include="Controllers\HospitalEmployeeController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VolunteerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

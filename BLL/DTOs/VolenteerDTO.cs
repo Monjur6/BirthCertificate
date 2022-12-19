@@ -23,6 +23,6 @@ namespace BLL.DTOs
         [Required]
         public string Gender { get; set; }
 
-        public virtual ICollection<HospitalEmployee> HospitalEmployees { get; set; }
+        //public virtual ICollection<HospitalEmployee> HospitalEmployees { get; set; }
     }
 }

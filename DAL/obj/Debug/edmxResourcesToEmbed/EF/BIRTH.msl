@@ -47,6 +47,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Tokens">
+      <EntityTypeMapping TypeName="BIRTHModel.Token">
+        <MappingFragment StoreEntitySet="Token">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="BirthRegistrationNumber" ColumnName="BirthRegistrationNumber" />
+          <ScalarProperty Name="Createdat" ColumnName="Createdat" />
+          <ScalarProperty Name="Expireat" ColumnName="Expireat" />
+          <ScalarProperty Name="tokenaccess" ColumnName="tokenaccess" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="BIRTHModel.User">
         <MappingFragment StoreEntitySet="Users">
